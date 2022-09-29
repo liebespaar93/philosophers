@@ -1,0 +1,13 @@
+{
+	"files.associations": {
+		"pthread.h": "c",
+		"_pthread_types.h": "c",
+		"__threading_support": "c",
+		"_pthread_attr_t.h": "c",
+		"_pthread_mutexattr_t.h": "c",
+		"_pthread_mutex_t.h": "c",
+		"ft_philo.h": "c",
+		"time.h": "c",
+		"stdlib.h": "c"
+	}
+}

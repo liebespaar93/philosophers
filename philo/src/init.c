@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 12:48:27 by kyoulee           #+#    #+#             */
+/*   Updated: 2022/10/19 12:49:00 by kyoulee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,6 +19,7 @@
 t_man	*ft_man_init(t_philo *philo, int len)
 {
 	int	i;
+
 	i = 0;
 	philo->man = malloc(sizeof(t_man) * len);
 	if (!philo->man)
@@ -26,7 +39,7 @@ t_man	*ft_man_init(t_philo *philo, int len)
 pthread_mutex_t	*ft_fork_init(t_philo *philo, int len)
 {
 	int	i;
-	
+
 	i = 0;
 	philo->forks = malloc(sizeof(pthread_mutex_t) * len);
 	if (!philo->forks)
@@ -36,8 +49,7 @@ pthread_mutex_t	*ft_fork_init(t_philo *philo, int len)
 	return (philo->forks);
 }
 
-
-void *ft_free_philo(t_philo *philo)
+void	*ft_free_philo(t_philo *philo)
 {
 	if (philo->forks)
 		free(philo->forks);
@@ -66,6 +78,5 @@ t_philo	*ft_philo_init(int ar, char *av[])
 	if (!ft_fork_init(philo, philo->number_of_philosophers) || \
 		!ft_man_init(philo, philo->number_of_philosophers))
 		return (ft_free_philo(philo));
-	
 	return (philo);
 }

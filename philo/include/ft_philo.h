@@ -6,7 +6,7 @@
 /*   By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 15:36:10 by kyoulee           #+#    #+#             */
-/*   Updated: 2022/10/19 12:52:22 by kyoulee          ###   ########.fr       */
+/*   Updated: 2022/10/20 14:52:26 by kyoulee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_philo
 	int				time_to_sleep;
 	int				number_of_times_each_philosopher_must_eat;
 	int				end_eat;
+	int				dead;
 	pthread_mutex_t	printf;
 	pthread_mutex_t	*forks;
 	t_man			*man;

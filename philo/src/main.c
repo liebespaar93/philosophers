@@ -6,7 +6,7 @@
 /*   By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:44:58 by kyoulee           #+#    #+#             */
-/*   Updated: 2022/10/19 12:48:20 by kyoulee          ###   ########.fr       */
+/*   Updated: 2022/10/20 23:05:16 by kyoulee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ void	dest_mutex(t_philo *philo)
 
 	i = 0;
 	while (i < philo->number_of_philosophers)
+	{
+		pthread_detach(philo->man[i].thread_id);
 		pthread_mutex_destroy(&philo->forks[i++]);
-	pthread_mutex_destroy(&philo->printf);
+	}
+	philo->dead = 0;
 }
 
 void	ft_work(t_philo *philo)
@@ -60,6 +63,8 @@ void	ft_work(t_philo *philo)
 		{
 			philo->time_to_die = 0;
 			pthread_mutex_lock(&philo->printf);
+			dest_mutex(philo);
+			pthread_mutex_unlock(&philo->printf);
 			return ;
 		}
 		if (ft_real_time(&philo->man[i]) > philo->man[i].die_time)
@@ -67,7 +72,9 @@ void	ft_work(t_philo *philo)
 			philo->time_to_die = 0;
 			pthread_mutex_lock(&philo->printf);
 			printf("%lldms	%d %s\n", \
-				ft_real_time(&philo->man[i]), philo->man[i].id, "dead");
+			ft_real_time(&philo->man[i]), philo->man[i].id, "died");
+			dest_mutex(philo);
+			pthread_mutex_unlock(&philo->printf);
 			return ;
 		}
 	}
@@ -92,5 +99,6 @@ int	main(int ar, char *av[])
 		return (-1);
 	ft_hope_kill_man(philo);
 	ft_work(philo);
+	pthread_mutex_destroy(&philo->printf);
 	ft_free_philo(philo);
 }

@@ -6,7 +6,7 @@
 /*   By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:48:27 by kyoulee           #+#    #+#             */
-/*   Updated: 2022/10/19 12:49:00 by kyoulee          ###   ########.fr       */
+/*   Updated: 2022/10/20 12:09:12 by kyoulee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_philo	*ft_philo_init(int ar, char *av[])
 	philo->time_to_die = ft_atoi(av[2]);
 	philo->time_to_eat = ft_atoi(av[3]);
 	philo->time_to_sleep = ft_atoi(av[4]);
+	philo->dead = 1;
 	if (philo->number_of_philosophers <= 0 || philo->time_to_die <= 0 \
 		|| philo->time_to_eat <= 0 || philo->time_to_sleep <= 0)
 		return (ft_free_philo(philo));

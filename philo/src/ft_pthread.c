@@ -6,7 +6,7 @@
 /*   By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:49:06 by kyoulee           #+#    #+#             */
-/*   Updated: 2022/10/19 12:51:12 by kyoulee          ###   ########.fr       */
+/*   Updated: 2022/10/20 23:20:44 by kyoulee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 #include <ft_philo.h>
 #include <sys/time.h>
 #include <unistd.h>
+
+void	ft_sleep(long long wait)
+{
+	wait += ft_timeval();
+	while (ft_timeval() < wait)
+		;
+}
 
 void	ft_right_handed(t_philo *philo, t_man *man)
 {
@@ -28,15 +35,15 @@ void	ft_right_handed(t_philo *philo, t_man *man)
 		ft_printf_mutex(man, ft_real_time(man), "has taken a fork");
 		ft_printf_mutex(man, ft_real_time(man), "is eating");
 		man->eat_cnt++;
-		usleep(philo->time_to_eat * 1000);
+		ft_sleep(philo->time_to_eat);
 		man->die_time = ft_real_time(man) + philo->time_to_die;
-		pthread_mutex_unlock(&philo->forks[man->id]);
 		pthread_mutex_unlock(
 			&philo->forks[(man->id + 1) % philo->number_of_philosophers]);
+		pthread_mutex_unlock(&philo->forks[man->id]);
 		if (man->eat_cnt == philo->number_of_times_each_philosopher_must_eat)
 			philo->end_eat++;
 		ft_printf_mutex(man, ft_real_time(man), "is sleeping");
-		usleep(philo->time_to_sleep * 1000);
+		ft_sleep(philo->time_to_sleep);
 		ft_printf_mutex(man, ft_real_time(man), "is thinking");
 	}
 }
@@ -52,15 +59,15 @@ void	ft_left_handed(t_philo *philo, t_man *man)
 		ft_printf_mutex(man, ft_real_time(man), "has taken a fork");
 		ft_printf_mutex(man, ft_real_time(man), "is eating");
 		man->eat_cnt++;
-		usleep(philo->time_to_eat * 1000);
+		ft_sleep(philo->time_to_eat);
 		man->die_time = ft_real_time(man) + philo->time_to_die;
+		pthread_mutex_unlock(&philo->forks[man->id]);
 		pthread_mutex_unlock(
 			&philo->forks[(man->id + 1) % philo->number_of_philosophers]);
-		pthread_mutex_unlock(&philo->forks[man->id]);
 		if (man->eat_cnt == philo->number_of_times_each_philosopher_must_eat)
 			philo->end_eat++;
 		ft_printf_mutex(man, ft_real_time(man), "is sleeping");
-		usleep(philo->time_to_sleep * 1000);
+		ft_sleep(philo->time_to_sleep);
 		ft_printf_mutex(man, ft_real_time(man), "is thinking");
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:48:27 by kyoulee           #+#    #+#             */
-/*   Updated: 2022/11/04 23:49:43 by kyoulee          ###   ########.fr       */
+/*   Updated: 2022/11/05 01:03:25 by kyoulee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,13 @@ t_philo	*ft_philo_init(t_philo *philo, int ar, char *av[])
 	philo->time_to_eat = ft_atoi(av[3]);
 	philo->time_to_sleep = ft_atoi(av[4]);
 	philo->dead = 1;
-	if ((philo->number_of_philosophers <= 0 || philo->time_to_die <= 0 \
-		|| philo->time_to_eat <= 0 || philo->time_to_sleep <= 0) \
-		&& printf("input num error!"))
-		return (NULL);
 	if (ar == 6)
 		philo->number_of_times_each_philosopher_must_eat = ft_atoi(av[5]);
+	if ((philo->number_of_philosophers <= 0 || philo->time_to_die <= 0 \
+		|| philo->time_to_eat <= 0 || philo->time_to_sleep <= 0 \
+		|| philo->number_of_times_each_philosopher_must_eat < 0) \
+		&& printf("input num error!"))
+		return (NULL);
 	if (pthread_mutex_init(&philo->end_eat_mutex, NULL) || \
 		pthread_mutex_init(&philo->dead_mutex, NULL) || \
 		pthread_mutex_init(&philo->printf_mutex, NULL) || \

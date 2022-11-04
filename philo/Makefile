@@ -6,7 +6,7 @@
 #    By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/19 12:53:58 by kyoulee           #+#    #+#              #
-#    Updated: 2022/10/20 23:21:21 by kyoulee          ###   ########.fr        #
+#    Updated: 2022/11/05 00:19:03 by kyoulee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ TARGET = $(PHILO_DIR)/philo
 
 CC = cc
 CXXFLAGS = $(NULL)
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -fsanitize=address
 IFLAGS = -I $(INCLUDE_DIR)
 LDFLAGS = $(NULL)
 LDLIBS = $(NULL)
@@ -77,13 +77,14 @@ INCLUDE_DIR = $(PHILO_DIR)/include
 #####***** SRC *****#####
 
 SRC_C_FILE =	\
-				ft_atoi.c	\
-				ft_pthread.c	\
-				init.c	\
 				main.c	\
-				print_mutex.c	\
-				time.c	\
-				work.c
+				ft_bzero.c	\
+				ft_atoi.c	\
+				ft_init.c	\
+				ft_thread_man.c	\
+				ft_pthread.c	\
+				ft_time.c	\
+				ft_print_mutex.c
 
 SRC_C = $(addprefix $(SRC_DIR)/, $(SRC_C_FILE))
 
@@ -96,7 +97,7 @@ OBJS_CLEAN = $(OBJS)
 all : $(OBJ_DIR) $(TARGET)
 
 $(TARGET) : $(OBJS)
-	$(CC) $(CFLAGS) $(IFLAGS) $(LDFLAGS) $(LDLIBS) $(OBJS) $(OBJS_SERVER) -o $(TARGET) -fsanitize=thread
+	$(CC) $(CFLAGS) $(IFLAGS) $(OBJS) -o $(TARGET) 
 	@echo "$(FG_MAGENTA)ar $(FG_LBLUE)src $(FG_LYELLOW)$@$(FG_LCYAN)"
 	@(for i in $(OBJS) $(OBJS_GET_NEXT_LINE) $(OBJS_DIMENSION); do echo $$i; done)
 	@echo "$(FG_WHITE)"
@@ -105,7 +106,7 @@ $(OBJ_DIR) :
 	mkdir $@
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
-	$(CC) $(CPPFLAGS) $(IFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 clean : 
 	@rm -f $(OBJS_CLEAN)

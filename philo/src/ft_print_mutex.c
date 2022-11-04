@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_mutex.c                                      :+:      :+:    :+:   */
+/*   ft_print_mutex.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 12:44:20 by kyoulee           #+#    #+#             */
-/*   Updated: 2022/10/20 23:04:40 by kyoulee          ###   ########.fr       */
+/*   Updated: 2022/11/05 00:40:17 by kyoulee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 void	ft_printf_mutex(t_man *man, long long time, char *str)
 {
-	pthread_mutex_lock(&man->philo->printf);
+	pthread_mutex_lock(&man->philo->printf_mutex);
 	if (man->philo->dead)
 		printf("%lld	%d %s\n", time, man->id, str);
-	pthread_mutex_unlock(&man->philo->printf);
+	pthread_mutex_unlock(&man->philo->printf_mutex);
 }

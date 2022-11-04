@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoulee <kyoulee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/19 12:44:29 by kyoulee           #+#    #+#             */
-/*   Updated: 2022/10/19 12:44:53 by kyoulee          ###   ########.fr       */
+/*   Created: 2022/11/01 16:25:00 by kyoulee           #+#    #+#             */
+/*   Updated: 2022/11/04 23:53:10 by kyoulee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <ft_philo.h>
-#include <sys/time.h>
+#include <sys/_types/_size_t.h>
 
-long long	ft_timeval(void)
+void	ft_bzero(void *s, size_t n)
 {
-	struct timeval	time;
-	long long		timeval;
+	unsigned char	*ptr;
 
-	gettimeofday(&time, NULL);
-	timeval = (time.tv_sec * 1000) + (time.tv_usec / 1000);
-	return (timeval);
-}
-
-long long	ft_real_time(t_man *man)
-{
-	return (ft_timeval() - man->create_time);
+	ptr = (unsigned char *)s;
+	while (n-- > 0)
+		*ptr++ = 0;
 }
